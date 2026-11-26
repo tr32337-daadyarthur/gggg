@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Portfolio | ครูผู้สอนเทคโนโลยีและการเขียนโปรแกรม</title>
+    <!-- นำเข้าฟอนต์ Prompt จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- นำเข้าไอคอนจาก Font Awesome (CDN ไม่ต้องติดตั้งไฟล์เพิ่ม) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- การตั้งค่าตัวแปรสีและฟอนต์ (ธีมน้ำเงิน-ขาว) --- */
+        :root {
+            --primary-color: #0284c7;      /* สีฟ้าหลัก (Sky 600) */
+            --primary-dark: #0369a1;       /* สีน้ำเงินเข้ม (Sky 700) */
+            --primary-light: #e0f2fe;      /* สีฟ้าอ่อน (Sky 100) */
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;           /* สีพื้นหลังเทาอมฟ้าอ่อนมาก */
+            --text-dark: #0f172a;          /* สีตัวอักษรหลัก */
+            --text-muted: #475569;         /* สีตัวอักษรรอง */
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(2, 132, 199, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        /* --- การรีเซ็ตค่าเริ่มต้น --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- แถบเมนูนำทาง (Navbar) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .btn-github-nav {
+            background-color: var(--text-dark);
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-github-nav:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* --- ส่วนที่ 1: หน้าแรก (Hero Section) --- */
+        #home {
+            padding: 140px 0 90px;
+            background: linear-gradient(135deg, var(--bg-white) 0%, var(--primary-light) 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            border: 1px solid #bae6fd;
+        }
+
+        .hero-content h1 {
+            font-size: 2.75rem;
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 560px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: #fff;
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            max-width: 340px;
+            width: 100%;
+        }
+
+        .avatar-placeholder {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
+        }
+
+        .profile-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+
+        .profile-card .role {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tech-tags span {
+            background: var(--bg-light);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- หัวข้อแต่ละส่วน (Section Header) --- */
+        section {
+            padding: 85px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- ส่วนที่ 2: แนะนำตัว (About Section) --- */
+        #about {
+            background-color: var(--bg-white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .about-text h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .info-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .info-list i {
+            color: var(--primary-color);
+            width: 20px;
+            text-align: center;
+        }
+
+        .skills-box {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .skills-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-category h4 {
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-pills span {
+            background: #fff;
+            border: 1px solid #bae6fd;
+            color: var(--primary-dark);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* --- ส่วนที่ 3: ผลงาน (Projects Section) --- */
+        #projects {
+            background-color: var(--bg-light);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .filter-btn {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 28px;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: #bae6fd;
+        }
+
+        .project-banner {
+            height: 150px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .project-category-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+
+        .project-body {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-body h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .project-body p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .project-link {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* --- ส่วนที่ 4: กิจกรรมและการอบรม (Activities Section) --- */
+        #activities {
+            background-color: var(--bg-white);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 30px;
+            border-left: 3px solid var(--primary-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -39px;
+            top: 26px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: var(--primary-light);
+            padding: 3px 12px;
+            border-radius: 50px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+        }
+
+        /* --- ส่วนท้ายเว็บไซต์ (Footer) --- */
+        footer {
+            background-color: var(--text-dark);
+            color: #cbd5e1;
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .footer-brand h3 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand p {
+            font-size: 0.92rem;
+            max-width: 450px;
+            color: #94a3b8;
+        }
+
+        .footer-contact h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            transition: var(--transition);
+        }
+
+        .contact-links a:hover {
+            color: #38bdf8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* --- การรองรับหน้าจอมือถือและแท็บเล็ต (Responsive Design) --- */
+        @media (max-width: 860px) {
+            .hero-grid,
+            .about-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                padding: 20px;
+                gap: 16px;
+                box-shadow: var(--shadow-md);
+                border-top: 1px solid var(--border-color);
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- แถบเมนูนำทาง -->
+    <header>
+        <div class="container navbar">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-laptop-code"></i>
+                <span>KruTech.Dev</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="เปิดเมนูนำทาง">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-item active">หน้าแรก</a></li>
+                <li><a href="#about" class="nav-item">แนะนำตัว</a></li>
+                <li><a href="#projects" class="nav-item">ผลงาน</a></li>
+                <li><a href="#activities" class="nav-item">กิจกรรม</a></li>
+                <li>
+                    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="btn-github-nav">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ส่วนที่ 1: หน้าแรก -->
+    <section id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="badge">ครูผู้สอนเทคโนโลยีและวิทยาการคำนวณ</span>
+                <h1>สร้างสรรค์การเรียนรู้<br>สู่โลกแห่ง <span>การเขียนโปรแกรม</span></h1>
+                <p>
+                    สวัสดีครับ ผมคือ <strong>[ชื่อ-นามสกุล ตัวอย่าง: ครูธนากร นวัตกรรม]</strong> 
+                    มุ่งมั่นพัฒนาทักษะการคิดเชิงคำนวณ (Computational Thinking) และการเขียนโค้ดให้กับผู้เรียน ผ่านการลงมือปฏิบัติจริง
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fa-solid fa-folder-open"></i> ดูผลงานและสื่อการสอน
+                    </a>
+                    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                        <i class="fa-brands fa-github"></i> เปิดดู GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="profile-card">
+                    <div class="avatar-placeholder">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3>[ครูธนากร นวัตกรรม]</h3>
+                    <p class="role">ครูกลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี</p>
+                    <div class="tech-tags">
+                        <span>Python</span>
+                        <span>HTML/CSS/JS</span>
+                        <span>Scratch</span>
+                        <span>Micro:bit</span>
+                        <span>IoT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนที่ 2: แนะนำตัว -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>แนะนำตัว</h2>
+                <p>ประวัติการศึกษา แนวทางการจัดการเรียนรู้ และความเชี่ยวชาญด้านเทคโนโลยี</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>ปรัชญาและแนวทางการสอน</h3>
+                    <p>
+                        เชื่อมั่นว่าการเรียนเขียนโปรแกรมไม่ใช่เพียงการท่องจำคำสั่ง แต่คือการฝึกฝนกระบวนการคิดอย่างเป็นระบบ การแก้ปัญหาอย่างสร้างสรรค์ และการทำงานร่วมกันเป็นทีม (Active Learning & Project-Based Learning)
+                    </p>
+                    <p>
+                        ผมพัฒนาสื่อการสอนออนไลน์ เว็บแอปพลิเคชันช่วยสอน และโครงงานหุ่นยนต์เพื่อเชื่อมโยงความรู้ในห้องเรียนเข้ากับการใช้งานจริงในชีวิตประจำวัน
+                    </p>
+
+                    <ul class="info-list">
+                        <li><i class="fa-solid fa-graduation-cap"></i> <strong>วุฒิการศึกษา:</strong> [ค.บ. / วท.บ. สาขาคอมพิวเตอร์ศึกษา]</li>
+                        <li><i class="fa-solid fa-school"></i> <strong>สังกัด:</strong> [โรงเรียนตัวอย่างวิทยา สพม.]</li>
+                        <li><i class="fa-solid fa-chalkboard-user"></i> <strong>รายวิชาที่สอน:</strong> วิทยาการคำนวณ, การออกแบบและเทคโนโลยี, การเขียนโปรแกรมเบื้องต้น</li>
+                    </ul>
+                </div>
+
+                <div class="skills-box">
+                    <h3>ทักษะด้านเทคโนโลยีและการสอน</h3>
+                    
+                    <div class="skill-category">
+                        <h4>ภาษาโปรแกรมและเว็บเทคโนโลยี</h4>
+                        <div class="skill-pills">
+                            <span>Python</span>
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                            <span>C / C++</span>
+                            <span>SQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>แพลตฟอร์มและฮาร์ดแวร์เพื่อการศึกษา</h4>
+                        <div class="skill-pills">
+                            <span>Scratch</span>
+                            <span>Micro:bit</span>
+                            <span>Arduino / ESP32</span>
+                            <span>KidBright</span>
+                            <span>Git & GitHub</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>เครื่องมือสร้างสื่อดิจิทัล</h4>
+                        <div class="skill-pills">
+                            <span>Canva for Education</span>
+                            <span>Google Workspace</span>
+                            <span>Figma</span>
+                            <span>VS Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนที่ 3: ผลงาน -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>ผลงานและนวัตกรรมการสอน</h2>
+                <p>รวบรวมซอร์สโค้ด เว็บแอปพลิเคชัน และสื่อการเรียนรู้ที่พัฒนาขึ้น</p>
+            </div>
+
+            <!-- ปุ่มกรองหมวดหมู่ผลงาน -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                <button class="filter-btn" data-filter="web">เว็บแอปพลิเคชัน</button>
+                <button class="filter-btn" data-filter="media">สื่อการสอน</button>
+                <button class="filter-btn" data-filter="iot">IoT / หุ่นยนต์</button>
+            </div>
+
+            <div class="projects-grid">
+                <!-- การ์ดผลงานที่ 1 -->
+                <article class="project-card" data-category="web">
+                    <div class="project-banner">
+                        <span class="project-category-tag">เว็บแอปพลิเคชัน</span>
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>ระบบฝึกเขียนโค้ด Python เบื้องต้น</h3>
+                        <p>เว็บแอปพลิเคชันสำหรับนักเรียนฝึกทำโจทย์อัลกอริทึม พร้อมระบบตรวจคำตอบอัตโนมัติและแสดงผลลัพธ์ทันที</p>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/python-practice" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-brands fa-github"></i> ซอร์สโค้ด (GitHub)
+                            </a>
+                            <a href="https://yourusername.github.io/python-practice" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> ทดลองใช้งาน
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- การ์ดผลงานที่ 2 -->
+                <article class="project-card" data-category="media">
+                    <div class="project-banner">
+                        <span class="project-category-tag">สื่อการสอน</span>
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>ชุดบทเรียนเกมผจญภัยด้วย Scratch</h3>
+                        <p>คู่มือและไฟล์โปรเจกต์ต้นแบบสำหรับสอนแนวคิดเรื่องเงื่อนไข (If-Else) และการวนซ้ำ (Loop) ผ่านการสร้างเกม 2 มิติ</p>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/scratch-lessons" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-brands fa-github"></i> ดาวน์โหลดสื่อ
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- การ์ดผลงานที่ 3 -->
+                <article class="project-card" data-category="iot">
+                    <div class="project-banner">
+                        <span class="project-category-tag">IoT / หุ่นยนต์</span>
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>สถานีตรวจวัดสภาพอากาศอัจฉริยะ</h3>
+                        <p>โครงงานบูรณาการบอร์ด ESP32 ร่วมกับเซนเซอร์วัดอุณหภูมิและความชื้น ส่งข้อมูลขึ้นแสดงผลบนหน้าเว็บไซต์แบบเรียลไทม์</p>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/smart-weather-iot" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-brands fa-github"></i> ซอร์สโค้ด (GitHub)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- การ์ดผลงานที่ 4 -->
+                <article class="project-card" data-category="web">
+                    <div class="project-banner">
+                        <span class="project-category-tag">เว็บแอปพลิเคชัน</span>
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>เกมตอบคำถามวิทยาการคำนวณ (Quiz App)</h3>
+                        <p>เว็บเกมทบทวนบทเรียนก่อนสอบ พัฒนาด้วย HTML, CSS และ Vanilla JavaScript รองรับการเล่นผ่านมือถือในห้องเรียน</p>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/cs-quiz-game" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-brands fa-github"></i> ซอร์สโค้ด (GitHub)
+                            </a>
+                            <a href="https://yourusername.github.io/cs-quiz-game" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดเล่นเกม
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนที่ 4: กิจกรรม -->
+    <section id="activities">
+        <div class="container">
+            <div class="section-header">
+                <h2>กิจกรรมและการพัฒนาวิชาชีพ</h2>
+                <p>การเข้าร่วมอบรม การเป็นวิทยากร และการนำนักเรียนเข้าร่วมแข่งขันทักษะทางวิชาการ</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-date">ปีการศึกษา 2568</span>
+                    <h3>ครูผู้ฝึกสอนนักเรียนแข่งขันหุ่นยนต์และเขียนโปรแกรม</h3>
+                    <p>นำนักเรียนเข้าร่วมการแข่งขันทักษะการเขียนโปรแกรมคอมพิวเตอร์และการสร้างหุ่นยนต์อัตโนมัติ ระดับเขตพื้นที่การศึกษา</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">ปีการศึกษา 2568</span>
+                    <h3>วิทยากรอบรมเชิงปฏิบัติการ "สร้างเว็บไซต์แรกด้วย HTML & CSS"</h3>
+                    <p>จัดกิจกรรมค่ายคอมพิวเตอร์ให้แก่นักเรียนระดับมัธยมศึกษา เพื่อปูพื้นฐานการพัฒนาเว็บไซต์และการเผยแพร่ผลงานบน GitHub Pages</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">ปีการศึกษา 2567</span>
+                    <h3>อบรมเชิงปฏิบัติการปัญญาประดิษฐ์ (AI) เพื่อการจัดการเรียนรู้</h3>
+                    <p>เข้าร่วมพัฒนาทักษะการประยุกต์ใช้เครื่องมือ AI และวิทยาการข้อมูลในการออกแบบกิจกรรมการเรียนรู้ยุคดิจิทัล</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนท้ายเว็บไซต์ (Footer) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fa-solid fa-laptop-code"></i> KruTech.Dev</h3>
+                    <p>
+                        เว็บไซต์รวบรวมผลงาน สื่อการเรียนรู้ และกิจกรรมด้านเทคโนโลยีและการเขียนโปรแกรม 
+                        จัดทำขึ้นเพื่อเป็นพื้นที่แบ่งปันความรู้แก่ผู้เรียนและเพื่อนร่วมวิชาชีพครู
+                    </p>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>ช่องทางการติดต่อสาธารณะ</h4>
+                    <div class="contact-links">
+                        <a href="mailto:teacher.example@school.ac.th">
+                            <i class="fa-solid fa-envelope"></i> teacher.example@school.ac.th
+                        </a>
+                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-github"></i> github.com/yourusername
+                        </a>
+                        <a href="#home">
+                            <i class="fa-solid fa-location-dot"></i> [หมวดวิชาคอมพิวเตอร์ โรงเรียนตัวอย่างวิทยา]
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> [ครูธนากร นวัตกรรม] — เผยแพร่บน GitHub Pages</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- สคริปต์ JavaScript -->
+    <script>
+        // 1. เปิด-ปิดเมนูนำทางบนโทรศัพท์มือถือ
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // ปิดเมนูมือถืออัตโนมัติเมื่อกดเลือกลิงก์
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // 2. ไฮไลต์เมนูนำทางตามส่วนที่กำลังเลื่อนดู (Scroll Spy)
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // 3. ระบบกรองหมวดหมู่ผลงาน (Project Filter)
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 4. แสดงปี พ.ศ. ปัจจุบันอัตโนมัติในส่วนท้ายเว็บไซต์
+        const thaiYear = new Date().getFullYear() + 543;
+        document.getElementById('currentYear').textContent = thaiYear;
+    </script>
+</body>
+</html>
